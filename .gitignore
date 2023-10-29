@@ -1,2 +1,7 @@
-saved_model
+saved_model/*
+!saved_model/pytorch_model.bin
+!saved_model/roberta_model
+!saved_model/roberta_tokenizer
+!saved_model/**/.gitattributes
 trainer_outputs
+__pycache__

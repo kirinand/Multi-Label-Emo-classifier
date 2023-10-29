@@ -9,9 +9,9 @@ import model
 device = torch.cuda.current_device() if torch.cuda.is_available() else 'cpu'
 model_path = "saved_model"
 
-tokenizer = RobertaTokenizerFast.from_pretrained("roberta-base")
+tokenizer = RobertaTokenizerFast.from_pretrained(f"{model_path}/roberta_tokenizer")
 roberta_config = RobertaConfig(hidden_dropout_prob=0.5)
-base_model = RobertaModel.from_pretrained("roberta-base", roberta_config)
+base_model = RobertaModel.from_pretrained(f"{model_path}/roberta_model", roberta_config)
 
 model_config = {
     'model': base_model,

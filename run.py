@@ -32,7 +32,7 @@ data = go_emo_dataset.data
 model_config = {
     'model': t_model,
     'n_classes': 28,
-    'p_drop': 0.3,
+    'p_drop': 0.5,
 }
 
 max_len = 512
@@ -59,6 +59,7 @@ training_args = TrainingArguments(
     evaluation_strategy="epoch",
     save_strategy="epoch",
     learning_rate=3e-5,
+    weight_decay=0.01,
     optim="adamw_torch",
     load_best_model_at_end=True,
     seed=266

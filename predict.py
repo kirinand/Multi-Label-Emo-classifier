@@ -4,14 +4,18 @@ from transformers import (
     RobertaModel,
     RobertaConfig,
 )
-import model
+from .model import MultLabEmoClassifier
+
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 device = torch.cuda.current_device() if torch.cuda.is_available() else 'cpu'
 model_path = "saved_model"
 
-tokenizer = RobertaTokenizerFast.from_pretrained(f"{model_path}/roberta_tokenizer")
+tokenizer = RobertaTokenizerFast.from_pretrained(os.path.join(BASE_DIR, model_path, 'roberta_tokenizer'))
 roberta_config = RobertaConfig(hidden_dropout_prob=0.5)
-base_model = RobertaModel.from_pretrained(f"{model_path}/roberta_model", roberta_config)
+base_model = RobertaModel.from_pretrained(os.path.join(BASE_DIR, model_path, 'roberta_model'), roberta_config)
 
 model_config = {
     'model': base_model,
@@ -21,8 +25,8 @@ model_config = {
 
 max_len = 512
 
-t_model = model.MultLabEmoClassifier(**model_config)
-t_model.load_state_dict(torch.load(f'{model_path}/pytorch_model.bin', map_location=torch.device(device)), strict=False)
+t_model = MultLabEmoClassifier(**model_config)
+t_model.load_state_dict(torch.load(os.path.join(BASE_DIR, model_path, 'pytorch_model.bin'), map_location=torch.device(device)), strict=False)
 t_model.to(device)
 
 t_model.eval()

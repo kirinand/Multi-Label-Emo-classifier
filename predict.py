@@ -27,9 +27,14 @@ t_model.to(device)
 
 t_model.eval()
 
-sample = "I'm not made for this world. I want to die. There is no reason for me to live."
+sample = "How can I divide 35 in a half, a third and a ninth, and get an even number? It seems impossible! Yet I know there must be a way..."
 
 def predict(text):
+    """
+    Predicts the labels for a given text or list of texts
+    :param text: string, or a list of strings
+    :return: binary tensor of shape (number of strings, 28)
+    """
     input = tokenizer(text, return_tensors='pt', max_length=max_len, truncation=True, padding=False).to(device)
     logits = t_model(**input)
     output = torch.sigmoid(logits)
